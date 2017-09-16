@@ -1,9 +1,14 @@
 'use strict'
 
 // define World object
-function World (container) {
+function World (container, width, depth, height) {
   // set self = this for use in render/animation callbacks
   self = this;
+
+  // set world dimensions to room size
+  this.roomWidth = width;
+  this.roomDepth = depth;
+  this.roomHeight = height;
 
   // array of shapes
   this.shapes = [];
@@ -22,7 +27,7 @@ function World (container) {
 World.prototype.addCamera = function (fov, near, far, pos) {
   // create instance of PerspectiveCamera
   // PerspectiveCamera( fov, aspect, near, far )
-  this.camera = new THREE.PerspectiveCamera(fov, this.width / this.height, near, far);
+  this.camera = new THREE.PerspectiveCamera(fov, this.roomWidth / this.roomHeight, near, far);
 
   // set camera position
   this.setCameraPos(pos)
@@ -127,7 +132,10 @@ World.prototype.addFloor = function (width, depth) {
   */
 
   var geometry = new THREE.PlaneGeometry( width * 12, depth * 12 );
-  var material = new THREE.MeshBasicMaterial( {color: 0xffffff, side: THREE.DoubleSide} );
+  // var material = new THREE.MeshBasicMaterial( {color: 0xffffff, side: THREE.DoubleSide} );
+  // MeshLambertMaterial( parameters )
+  var material = new THREE.MeshLambertMaterial({color: 0xffffff, side: THREE.DoubleSide});
+
   var plane = new THREE.Mesh( geometry, material );
 
   plane.position.x = 0;
@@ -151,7 +159,9 @@ World.prototype.addCeiling = function (width, depth, height) {
   */
 
   var geometry = new THREE.PlaneGeometry( width * 12, depth * 12 );
-  var material = new THREE.MeshBasicMaterial( {color: 0xffffff, side: THREE.DoubleSide} );
+  // var material = new THREE.MeshBasicMaterial( {color: 0xffffff, side: THREE.DoubleSide} );
+  var material = new THREE.MeshLambertMaterial({color: 0xffffff, side: THREE.DoubleSide});
+
   var plane = new THREE.Mesh( geometry, material );
 
   plane.position.x = 0;
@@ -224,12 +234,12 @@ $(function() {
         roomHeight = 8;
 
   // define World inside container
-  const world = new World('.content');
+  const world = new World('.content', roomWidth, roomDepth, roomHeight);
 
   // define camera
-  let fov = 75,
-      near = .01,
-      far = 1000,
+  let fov = 72,
+      near = 1,
+      far = 200,
       cameraPos = [0, roomHeight * 12 / 2, roomDepth * 12];
 
   world.addCamera(fov, near, far, cameraPos);
