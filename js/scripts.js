@@ -133,7 +133,6 @@ World.prototype.addFloor = function (width, depth) {
 
   var geometry = new THREE.PlaneGeometry( width * 12, depth * 12 );
   // var material = new THREE.MeshBasicMaterial( {color: 0xffffff, side: THREE.DoubleSide} );
-  // MeshLambertMaterial( parameters )
   var material = new THREE.MeshLambertMaterial({color: 0xffffff, side: THREE.DoubleSide});
 
   var plane = new THREE.Mesh( geometry, material );
@@ -212,6 +211,7 @@ function Cube (width, height, depth, texture) {
   // Mesh( geometry, material )
   this.mesh = new THREE.Mesh(this.geometry, this.material);
 }
+
 
 // define Light object
 
