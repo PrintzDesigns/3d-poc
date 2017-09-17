@@ -27,7 +27,7 @@ function World (container, width, depth, height) {
 World.prototype.addCamera = function (fov, near, far, pos) {
   // create instance of PerspectiveCamera
   // PerspectiveCamera( fov, aspect, near, far )
-  this.camera = new THREE.PerspectiveCamera(fov, this.roomWidth / this.roomHeight, near, far);
+  this.camera = new THREE.PerspectiveCamera(fov, this.width / this.height, near, far);
 
   // set camera position
   this.setCameraPos(pos)
@@ -91,6 +91,9 @@ World.prototype.loadModel = function (modelpath) {
       // pass the loaded object data to the onLoad function.
       function ( obj ) {
       //add the loaded object to the scene
+          const test = obj.children;
+          console.dir(test)
+
           self.scene.add( obj );
       },
 
